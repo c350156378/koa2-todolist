@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class LoginComponent implements OnInit {
 
-  user = {email:'739077689@qq.com',password: '123'};
+  user = {};
 
   submitted = false;
 
