@@ -1,0 +1,43 @@
+<div class="container">
+    <div *ngFor="let alert of alerts">
+        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+    </div>
+    <div class="card text-center w-50 mx-auto mt-5">
+
+        <div class="card-block">
+            <div class="card-title">欢迎 {{userEmail}}，你的待办事项是</div>
+            <input type="text" class="form-control" [(ngModel)]="todos" placeholder="请输入待办事项" (keyup)="addTodos($event)">
+        </div>
+        <tabset>
+            <tab heading='待办事项'>
+                <ul class="list-group">
+                    <ng-template ngFor let-list [ngForOf]="lists" let-i="index" [ngForTrackBy]="trackById">
+                        <li *ngIf="!list.status" class="list-group-item d-flex justify-content-between align-items-center">
+                            {{i+1}}. {{list.content}}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="finished(i)">完成</button>
+                                <button type="button" class="btn btn-sm btn-default" (click)="remove(i)">删除</button>
+                            </div>
+                        </li>
+                    </ng-template>
+                    <li *ngIf="Done()" class="list-group-item d-flex justify-content-between align-items-center">暂无待办事项</li>
+                </ul>
+
+            </tab>
+            <tab heading='已完成事项'>
+                <ul class="list-group">
+                    <ng-template ngFor let-list [ngForOf]="lists" let-i="index" [ngForTrackBy]="trackById">
+                        <li *ngIf="list.status" class="list-group-item d-flex justify-content-between align-items-center">
+                            {{i+1}}. {{list.content}}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="restore(i)">还原</button>
+                            </div>
+                        </li>
+                    </ng-template>
+                    <li *ngIf="count <=0" class="list-group-item d-flex justify-content-between align-items-center">暂无已完成事项</li>
+                </ul>
+
+            </tab>
+        </tabset>
+    </div>
+</div>
