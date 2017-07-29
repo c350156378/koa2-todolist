@@ -8,10 +8,11 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
+      // return true;
       if(sessionStorage.getItem('koa2-blog')){
         return true;
       }else{
-        this.router.navigate(['/login']);
+        this.router.navigate(['/todolist']);
         return false;
       }
    

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (router) => {
 
-    router.get('/user/:id', async(ctx, next) => {
+    router.get('/api/user/:id', async(ctx, next) => {
             try {
                 const id = ctx.params.id;
                 let userInfo = await User.findById(id).exec();
@@ -18,7 +18,7 @@ module.exports = (router) => {
                 console.log(error);
             }
         })
-        .post('/user', async(ctx, next) => {
+        .post('/api/user', async(ctx, next) => {
             let data = ctx.request.body;
             let userInfo = await User.findOne({ email: data.email });
             if (userInfo != null) {

@@ -17,6 +17,7 @@ export class TodoListComponent implements OnInit {
   lists = [];
   count = 0;
   alerts: any = [];
+  currentId: number = 0;
 
   private apiUrl = '/api/todolist';
 
@@ -25,7 +26,34 @@ export class TodoListComponent implements OnInit {
   ngOnInit() {
     this.userEmail = JSON.parse(sessionStorage.getItem('koa2-blog')).userEmail;
     this.user_id = JSON.parse(sessionStorage.getItem('koa2-blog')).userId;
+
     this.getTodos();
+  //   this.lists = [{
+  //     user_id: '12',
+  //     content: '女里学习',
+  //     status: true
+  //   },{
+  //     user_id: '12',
+  //     content: '女里学习',
+  //     status: false
+  //   },
+  // {
+  //     user_id: '12',
+  //     content: '女里学习',
+  //     status: false
+  //   },{
+  //     user_id: '12',
+  //     content: '女里学习',
+  //     status: false
+  //   },{
+  //     user_id: '12',
+  //     content: '女里学习',
+  //     status: false
+  //   },{
+  //     user_id: '12',
+  //     content: '女里学习',
+  //     status: false
+  //   }]
   }
 
   Done(): any {
@@ -73,7 +101,7 @@ export class TodoListComponent implements OnInit {
               msg: `创建成功`,
               timeout: 2000
             });
-            
+
           } else {
             this.alerts = [];
             this.alerts.push({
@@ -82,12 +110,12 @@ export class TodoListComponent implements OnInit {
               timeout: 2000
             });
           }
-          
+
 
         }, err => {
           console.log(err);
         });
-        this.getTodos();
+      this.getTodos();
       this.todos = '';
 
     }
@@ -130,8 +158,9 @@ export class TodoListComponent implements OnInit {
       headers.append('Authorization', 'Bear ' + jwt);
     }
     let options = new RequestOptions({ headers: headers });
+
     this.http
-      .put('/api/todolist', JSON.stringify({ id: this.lists[index]._id, status: true }), options)
+      .put('/api/todolist', JSON.stringify({ id: index, status: true }), options)
       .map(res => {
         let body = res.json();
         return body || body.data || {};
@@ -160,9 +189,8 @@ export class TodoListComponent implements OnInit {
       headers.append('Authorization', 'Bear ' + jwt);
     }
     let options = new RequestOptions({ headers: headers });
-
     this.http
-      .put('/api/todolist', JSON.stringify({ id: this.lists[index]._id, status: false }), options)
+      .put('/api/todolist', JSON.stringify({ id: index, status: false }), options)
       .map(res => {
         let body = res.json();
         return body || body.data || {};
@@ -189,7 +217,7 @@ export class TodoListComponent implements OnInit {
     }
     let options = new RequestOptions({ headers: headers });
     //this.lists.splice(index, 1);
-    this.http.delete(`/api/todolist/${this.lists[index]._id}`, options)
+    this.http.delete(`/api/todolist/${index}`, options)
       .map(res => {
         let body = res.json();
         return body || body.data || {};
@@ -206,6 +234,10 @@ export class TodoListComponent implements OnInit {
         this.getTodos();
       });
 
+  }
+
+  showNum(event){
+    this.currentId =  event.first;
   }
 
 }

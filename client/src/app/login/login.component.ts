@@ -13,7 +13,10 @@ import { Observable } from 'rxjs/Observable';
 })
 export class LoginComponent implements OnInit {
 
-  user = {};
+  user = { 
+    email: '123456789@qq.com',
+    password: '123'
+   };
 
   submitted = false;
 
@@ -24,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   doLogin() { 
     this.submitted = true;
-    this.http.post('/user', this.user).map(res => {let body = res.json();return body||body.data || {};}).subscribe(user => {
+    this.http.post('/api/user', this.user).map(res => {let body = res.json();return body||body.data || {};}).subscribe(user => {
       console.log(user);
       if(user.success){
         sessionStorage.setItem('koa2-blog', JSON.stringify(user));

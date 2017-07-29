@@ -1,43 +1,42 @@
-<div class="container">
-    <div *ngFor="let alert of alerts">
-        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
-    </div>
-    <div class="card text-center w-50 mx-auto mt-5">
-
-        <div class="card-block">
-            <div class="card-title">欢迎 {{userEmail}}，你的待办事项是</div>
-            <input type="text" class="form-control" [(ngModel)]="todos" placeholder="请输入待办事项" (keyup)="addTodos($event)">
-        </div>
-        <tabset>
-            <tab heading='待办事项'>
-                <ul class="list-group">
-                    <ng-template ngFor let-list [ngForOf]="lists" let-i="index" [ngForTrackBy]="trackById">
-                        <li *ngIf="!list.status" class="list-group-item d-flex justify-content-between align-items-center">
-                            {{i+1}}. {{list.content}}
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-primary" (click)="finished(i)">完成</button>
-                                <button type="button" class="btn btn-sm btn-default" (click)="remove(i)">删除</button>
-                            </div>
-                        </li>
-                    </ng-template>
-                    <li *ngIf="Done()" class="list-group-item d-flex justify-content-between align-items-center">暂无待办事项</li>
-                </ul>
-
-            </tab>
-            <tab heading='已完成事项'>
-                <ul class="list-group">
-                    <ng-template ngFor let-list [ngForOf]="lists" let-i="index" [ngForTrackBy]="trackById">
-                        <li *ngIf="list.status" class="list-group-item d-flex justify-content-between align-items-center">
-                            {{i+1}}. {{list.content}}
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-primary" (click)="restore(i)">还原</button>
-                            </div>
-                        </li>
-                    </ng-template>
-                    <li *ngIf="count <=0" class="list-group-item d-flex justify-content-between align-items-center">暂无已完成事项</li>
-                </ul>
-
-            </tab>
-        </tabset>
-    </div>
+<div class="ui-g ui-fluid" style="justify-content: center;">
+  <div *ngFor="let alert of alerts">
+    <p-messages [value]="alert"></p-messages>
+  </div>
+  <div class="ui-g-12 ui-md-6 ui-lg-4">
+    <p-panel header="欢迎 userEmail，你的待办事项是" class="ui-g-12">
+      <input pInputText [(ngModel)]="todos" placeholder="请输入待办事项" (keyup)="addTodos($event)">
+    </p-panel>
+    <p-tabView class="ui-g-12">
+      <p-tabPanel header="待办事项">
+        <p-dataGrid [value]="lists  | lists:1" emptyMessage="暂无待办事项" (onPage)="showNum($event)" [paginator]="true" [rows]="5"  [trackBy]="trackById">
+          <ng-template let-list let-i="index" pTemplate="item">
+            <div class="ui-g-12">
+              <div class="ui-g-8">
+                {{i+1}}. {{list.content}}
+              </div>
+              <div class="ui-g-4  ui-g-nopad" style="display:flex;">
+                <button pButton icon="fa-calendar-check-o" class="ui-button-primary" (click)="finished(list._id)"></button>
+                <button pButton icon="fa-calendar-times-o" class="ui-button-danger" (click)="remove(list._id)"></button>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataGrid>
+      </p-tabPanel>
+      <p-tabPanel header="已完成事项">
+        <p-dataGrid [value]="lists | lists" emptyMessage="暂无已完成事项" (onPage)="showNum($event)" [paginator]="true" [rows]="5" [totalRecords]="totalRecords" [trackBy]="trackById">
+          <ng-template let-list let-i="index" pTemplate="item">
+            <div class="ui-g-12">
+              <div class="ui-g-10">
+                {{i+1 + currentId}}. {{list.content}}
+              </div>
+              <div class="ui-g-2 ui-g-nopad">
+                <button pButton icon="fa-calendar-minus-o" class="ui-button-success" (click)="restore(list._id)"></button>
+              </div>
+            </div>
+          </ng-template>
+          
+        </p-dataGrid>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
 </div>

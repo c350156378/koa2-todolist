@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-not-found',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageNotFoundComponent implements OnInit {
 
-  constructor() { }
+  count: number = 4;
+
+  constructor(public router: Router) { }
 
   ngOnInit() {
+    let t = setInterval(() => {
+      this.count--;
+      if(this.count <=-1){
+        clearInterval(t);
+        this.router.navigate(['/todolist']);
+      }
+    }, 1000);
   }
 
 }
