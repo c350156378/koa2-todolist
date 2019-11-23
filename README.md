@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-10-31 09:08:05
- * @LastEditTime: 2019-11-23 16:01:37
+ * @LastEditTime: 2019-11-23 16:03:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\README.md
@@ -10,7 +10,7 @@
 
 使用primeng组件
 
-client2 目录下 npm install && ng build -op ../server2/client
+client2 目录下 npm install && ng build --output-path ../server2/client
 
 sever2 目录下 npm install && npm start
 
