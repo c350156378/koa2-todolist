@@ -1,4 +1,12 @@
-# 学习koa2和angular
+<!--
+ * @Author: your name
+ * @Date: 2019-10-31 09:08:05
+ * @LastEditTime: 2019-11-23 14:00:40
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \koa2-todolist\README.md
+ -->
+# 学习nestjs和angular
 
 加入 proxy.config.json 文件
 ngx组件改为primeng组件
@@ -12,17 +20,11 @@ sever 目录下 npm start
 开命令行，
 mongo
 use koa2-todolist
-db.users.insertOne({email:"123456789@qq.com",password:"123"}) 
+db.users.insertOne({email:"123456789@qq.com",password:"123456"}) 
 
 个人学习，仅供参考
 
 参考：https://molunerfinn.com/Vue+Koa/
 
 # 关于最佳实践
-1. config目录用于配置不同环境
-2. models/schema用户定义数据结构
-3. controller用于与http交互
-4. routes用于定义路由
-5. service用于定义逻辑？，可选
-6. libs/utils 用于定义通用函数，可选
-7. middleware 用于定义中间件，可选
+练习

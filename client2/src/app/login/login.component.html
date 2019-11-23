@@ -1,0 +1,48 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-10-31 09:41:38
+ * @LastEditTime: 2019-11-16 11:30:49
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \koa2-todolist\client2\src\app\login\login.component.html
+ -->
+<div class="ui-g" style="justify-content: center;">
+ 
+    
+    <form #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && doLogin()" class="ui-g ui-fluid" autocomplete="nope">
+        <h1 style="text-align: center;width:100%;">欢迎登陆</h1>
+      <div class="ui-g-12">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+          <input pInputText type="email" id="username" name="username" placeholder="邮箱" required minlength="4" maxlength="24" [(ngModel)]="user.username"
+            #username="ngModel" autocomplete="nope">
+
+
+        </div>
+        <div *ngIf="loginForm.submitted && !username.valid" class="ui-g-12">
+          邮箱必须填写
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+          <input pInputText type="password" id="password" autocomplete="nope" name="password" placeholder="密码" required [(ngModel)]="user.password" #password="ngModel">
+
+        </div>
+        <div *ngIf="loginForm.submitted && !password.valid" class="ui-g-12">
+          密码必须填写
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-inputgroup">
+
+          <button pButton label="登陆"></button>
+
+        </div>
+      </div>
+    </form>
+
+
+
+</div>
