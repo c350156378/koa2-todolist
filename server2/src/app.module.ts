@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-31 10:57:42
- * @LastEditTime: 2019-11-22 10:41:34
+ * @LastEditTime: 2019-11-23 14:27:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\server2\src\app.module.ts
@@ -16,10 +16,14 @@ import { ListModule } from './list/list.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { PassportModule } from '@nestjs/passport';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
-    
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client')
+    }),
     UserModule,
     ListModule,
     MongooseModule.forRoot(
@@ -27,7 +31,7 @@ import { PassportModule } from '@nestjs/passport';
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex:true,
+        useCreateIndex: true,
         useFindAndModify: false
       }),
     AuthModule],

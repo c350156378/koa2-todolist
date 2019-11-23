@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-09 16:20:28
- * @LastEditTime: 2019-11-19 17:38:38
+ * @LastEditTime: 2019-11-23 15:52:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\server2\src\list\list.controller.ts
@@ -19,12 +19,8 @@ export class ListController {
   @Get()
   
   async findAll(@Request() req) {
-    return this.listService.findAll();
-  }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return 'one';
+    return this.listService.findAll(req.user.userId);
   }
 
   @Post()

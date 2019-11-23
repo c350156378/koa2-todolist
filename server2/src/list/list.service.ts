@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-09 16:42:45
- * @LastEditTime: 2019-11-22 10:34:32
+ * @LastEditTime: 2019-11-23 15:52:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\server2\src\list\list.service.ts
@@ -21,8 +21,8 @@ export class ListService {
     return await createList.save();
   }
 
-  async findAll(){
-    return this.listModel.find().exec();
+  async findAll(uid){
+    return this.listModel.find({uid:uid}).exec();
   }
 
   async findOne(id:string){

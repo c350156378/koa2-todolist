@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-31 09:41:38
- * @LastEditTime: 2019-11-16 15:27:25
+ * @LastEditTime: 2019-11-23 15:18:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\client2\src\app\app.module.ts
@@ -31,9 +31,10 @@ import { AuthGuard } from './auth.guard';
 import { ListsPipe } from './lists.pipe';
 
 import {JwtModule} from '@auth0/angular-jwt';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes  = [
-  
+  {path:'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'todolist', canActivate:[AuthGuard], component: TodoListComponent},
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -50,7 +51,8 @@ export function tokenGetter(){
     LoginComponent,
     TodoListComponent,
     PageNotFoundComponent,
-    ListsPipe
+    ListsPipe,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
