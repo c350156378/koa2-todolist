@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2019-10-31 11:22:37
- * @LastEditTime: 2019-11-23 15:35:27
+ * @LastEditTime: 2019-11-30 14:20:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\server2\src\user\user.service.ts
  */
-import { Injectable, BadRequestException, ForbiddenException, HttpException } from '@nestjs/common';
+import { Injectable, BadRequestException, ForbiddenException, HttpException, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './interfaces/user.interface';
 import { Model, Error } from 'mongoose';
@@ -27,6 +27,7 @@ export class UserService {
     }
     createUser.password = await bcrypt.hash(createUser.password, 10);
     return await createUser.save();
+
   }
 
   async findOne(username: string) {

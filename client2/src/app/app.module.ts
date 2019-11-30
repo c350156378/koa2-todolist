@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-31 09:41:38
- * @LastEditTime: 2019-11-23 15:18:52
+ * @LastEditTime: 2019-11-25 14:23:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\client2\src\app\app.module.ts
@@ -11,7 +11,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -32,6 +32,7 @@ import { ListsPipe } from './lists.pipe';
 
 import {JwtModule} from '@auth0/angular-jwt';
 import { RegisterComponent } from './register/register.component';
+import { HttpErrorInterceptor } from './http-error.interceptor';
 
 const routes: Routes  = [
   {path:'register', component: RegisterComponent},
@@ -76,7 +77,14 @@ export function tokenGetter(){
       }
     })
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

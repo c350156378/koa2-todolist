@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-23 15:13:58
- * @LastEditTime: 2019-11-23 15:37:21
+ * @LastEditTime: 2019-11-25 14:45:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\client2\src\app\register\register.component.ts
@@ -34,27 +34,11 @@ export class RegisterComponent implements OnInit {
   doLogin() {
     this.submitted = true;
     this.http.post<any>('/api/user', this.user)
-      .pipe(
-        tap((user) => console.log(user)),
-        catchError(this.handleError<any>('/api/user'))
-      ).subscribe(res => {
-        if (res) {
-          window.alert(res)
+      .subscribe(res => {
+        if (res && res._id) {
+          window.alert('注册成功');
+          this.router.navigate(['/login'])
         }
       });
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
   }
 }

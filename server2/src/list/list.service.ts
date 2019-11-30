@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-09 16:42:45
- * @LastEditTime: 2019-11-23 15:52:52
+ * @LastEditTime: 2019-11-30 15:13:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\server2\src\list\list.service.ts
@@ -35,6 +35,7 @@ export class ListService {
   }
 
   async update(id:string, status:number){
-    return this.listModel.findByIdAndUpdate(id, {status:status}).exec();
+    console.log(id, status);
+    return this.listModel.findByIdAndUpdate(id, {status:status}, {new:true}).exec();
   }
 }

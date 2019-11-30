@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-31 13:29:51
- * @LastEditTime: 2019-11-16 15:12:23
+ * @LastEditTime: 2019-11-28 10:12:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\server2\src\auth\auth.service.ts
@@ -17,13 +17,14 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) { }
 
-  async validateUser(username, password): Promise<any> {
-    
+  async validateUser(username, pass): Promise<any> {
     const user = await this.userService.findOne(username);
-    const compare = await bcrypt.compare(password, user.password);
-    if (user && compare) {
-      const { password, ...result } = user.toJSON();
-      return result;
+    if (user) {
+      const compare = await bcrypt.compare(pass, user.password);
+      if(compare){
+        const { password, ...result } = user.toJSON();
+        return result;
+      }
     }
     return null;
   }

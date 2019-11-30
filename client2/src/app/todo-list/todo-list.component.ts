@@ -87,14 +87,14 @@ export class TodoListComponent implements OnInit {
 
   finished(index) {
     this.http
-      .put<any>('/api/list', { id: index, status: 1 }).pipe(
+      .put<any>(`/api/list/${index}`, { status: 1 }).pipe(
         tap(list => console.log(list)),
         catchError(this.handleError<any>('api/list'))
       ).subscribe(tdlist => {
         // const idx = this.lists.findIndex(list=>list._id === index);
 
         // this.lists.splice(idx,1, tdlist);
-        
+
         this.lists = this.lists.filter(list => list._id !== index);
         this.getTodos();
       });
@@ -102,7 +102,7 @@ export class TodoListComponent implements OnInit {
 
   restore(index) {
     this.http
-      .put<any>('/api/list', { id:  index, status: 0 }).pipe(
+      .put<any>(`/api/list/${index}`, { status: 0 }).pipe(
         tap(list => console.log(list)),
         catchError(this.handleError<any>('api/list'))
       )
@@ -125,11 +125,11 @@ export class TodoListComponent implements OnInit {
 
   showNum(event) {
     this.currentId = event.first;
-    
+
   }
 
 
-  logout(){
+  logout() {
     sessionStorage.removeItem('access_token');
     this.router.navigate(['/login'])
   }
