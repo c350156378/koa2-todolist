@@ -1,27 +1,28 @@
-import * as mongoose from 'mongoose';
-import { User } from '../interfaces/user.interface';
+import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 
+export type UserDocument = User & Document;
 
-export const UserSchema: mongoose.Schema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  createTime: {
-    type: Date,
-    default: Date.now
-  },
-  updateTime: {
-    type: Date,
-    default: Date.now
-  }
-}, {
-  timestamps: { createdAt: 'createTime', updatedAt: 'updateTime' }
-})
+@Schema()
+export class User {
+  @Prop({ required: true })
+  username: string;
 
+  @Prop({ required: true })
+  password: string;
 
+  @Prop({ default: Date.now })
+  createTime: Date;
+
+  @Prop({ default: Date.now })
+  updateTime: Date;
+
+  @Prop(
+    raw({
+      createdAt: Date,
+      updatedAt: Date,
+    })
+  )
+  timestamps: any;
+}
+
+export const UserSchema = SchemaFactory.createForClass(User);

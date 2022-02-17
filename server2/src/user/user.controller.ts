@@ -1,36 +1,42 @@
-/*
- * @Author: your name
- * @Date: 2019-10-31 11:10:48
- * @LastEditTime: 2019-11-30 14:38:42
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \koa2-todolist\server2\src\user\user.controller.ts
- */
-import { Controller, Get, Post, Body, Param, SerializeOptions } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserService } from './user.service';
-import { ValidateObjectId } from './shared/validate-object-id.pipe';
-import { ApiUseTags, ApiBearerAuth, ApiImplicitParam } from '@nestjs/swagger';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
-
-@ApiUseTags('user')
-@ApiBearerAuth()
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.create(createUserDto);
-  }
+  constructor(private readonly userService: UserService) {}
 
-  @Get(':id')
-  @ApiImplicitParam({name:'id', type:String})
-  async getOne(@Param('id', new ValidateObjectId()) id) {
-    return await this.userService.findById(id);
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
   @Get()
-  async findAll() {
-    return await this.userService.findAll();
+  findAll() {
+    return this.userService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.userService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(+id, updateUserDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.userService.remove(+id);
   }
 }

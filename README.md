@@ -6,13 +6,16 @@
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\README.md
  -->
-# 学习nestjs和angular
 
-使用primeng组件
+# 学习 nestjs 和 angular
 
-client2 目录下 npm install && ng build --output-path ../server2/client
+使用 primeng 组件
 
-sever2 目录下 npm install && npm start
+client2 目录下
+`npm install && ng build --output-path ../server2/client`
+
+sever2 目录下
+`npm install && npm run start:dev`
 
 个人学习，仅供参考
 

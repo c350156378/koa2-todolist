@@ -1,45 +1,43 @@
-/*
- * @Author: your name
- * @Date: 2019-10-31 11:22:37
- * @LastEditTime: 2019-11-30 14:20:38
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \koa2-todolist\server2\src\user\user.service.ts
- */
-import { Injectable, BadRequestException, ForbiddenException, HttpException, NotAcceptableException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './interfaces/user.interface';
-import { Model, Error } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
-import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User, UserDocument } from './schemas/user.schema';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
-
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {
-  }
-
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
   async create(createUserDto: CreateUserDto) {
-    const createUser = new this.userModel(createUserDto);
-    const existUser = await this.findOne(createUser.username);
+    const createdUser = new this.userModel(createUserDto);
+    const existUser = await this.userModel
+      .findOne({ username: createdUser.username })
+      .exec();
     if (existUser) {
-      return '用户名已经使用';
+      return { message: '用户名已使用' };
     }
-    createUser.password = await bcrypt.hash(createUser.password, 10);
-    return await createUser.save();
-
-  }
-
-  async findOne(username: string) {
-    return await this.userModel.findOne({ username: username }).exec();
-  }
-
-  async findById(id: string) {
-    return await this.userModel.findById(id).exec();
+    createdUser.password = bcrypt.hashSync(createdUser.password, 10);
+    return await createdUser.save();
   }
 
   async findAll() {
     return await this.userModel.find().exec();
   }
 
+  async findOne(id: number) {
+    return await this.userModel.findById(id).exec();
+  }
+
+  async findByUsername(username: string) {
+    return await this.userModel.findOne({ username }).exec();
+  }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${id} user`;
+  }
+
+  remove(id: number) {
+    return this.userModel.deleteOne({ id }).exec();
+  }
 }
