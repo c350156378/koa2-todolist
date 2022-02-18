@@ -6,23 +6,27 @@
  * @Description: In User Settings Edit
  * @FilePath: \koa2-todolist\client2\src\app\auth.guard.ts
  */
-import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from "@angular/router";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router){}
+  constructor(private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-      // return true;
-      if(sessionStorage.getItem('access_token')){
-        return true;
-      }else{
-        this.router.navigate(['/login']);
-        return false;
-      }
-   
+    state: RouterStateSnapshot
+  ): boolean {
+    // return true;
+    if (sessionStorage.getItem("access_token")) {
+      return true;
+    } else {
+      this.router.navigate(["/login"]);
+      return false;
+    }
   }
 }
